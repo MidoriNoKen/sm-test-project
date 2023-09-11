@@ -14,6 +14,8 @@ class CreateVehiclesTable extends Migration
             $table->string('type');
             $table->float('fuel_consumption');
             $table->string('service_schedule');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('status');
             $table->timestamps();
         });
     }

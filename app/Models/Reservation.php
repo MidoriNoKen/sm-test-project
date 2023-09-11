@@ -2,24 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'vehicle_id',
-        'approval_level_id',
-        'status',
-        'start_date',
-        'end_date',
-        'notes'
-    ];
+    protected $fillable = ['status', 'start_date', 'end_date', 'notes', 'admin_id', 'vehicle_id', 'driver_id', 'company_id', 'office_id', 'mine_id'];
 
-    public function user()
+    public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class);
     }
 
     public function vehicle()
@@ -27,8 +18,33 @@ class Reservation extends Model
         return $this->belongsTo(Vehicle::class);
     }
 
-    public function approvalLevel()
+    public function driver()
     {
-        return $this->belongsTo(ApprovalLevel::class);
+        return $this->belongsTo(Driver::class);
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class);
+    }
+
+    public function mine()
+    {
+        return $this->belongsTo(Mine::class);
+    }
+
+    public function approvals()
+    {
+        return $this->hasMany(Approval::class);
+    }
+
+    public function vehicleUsageHistories()
+    {
+        return $this->hasMany(VehicleUsageHistory::class);
     }
 }

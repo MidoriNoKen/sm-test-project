@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'users',
+        'passwords' => 'admins',
     ],
 
     /*
@@ -36,10 +36,17 @@ return [
     */
 
     'guards' => [
-        'web' => [
+
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
         ],
+
+        'approver' => [
+            'driver' => 'session',
+            'provider' => 'approvers',
+        ],
+
     ],
 
     /*
@@ -60,9 +67,15 @@ return [
     */
 
     'providers' => [
-        'users' => [
+
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
+        ],
+
+        'approvers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Approvers::class,
         ],
 
         // 'users' => [
@@ -93,6 +106,20 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'approvals' => [
+            'provider' => 'approvals',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
